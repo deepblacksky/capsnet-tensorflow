@@ -38,7 +38,7 @@ So its value must be between 0 and 1.
 To achieve this compression and to complete the Capsule-level activation, Hinton used a non-linear function called "squashing."
 This non-linear function ensures that the length of the short vector can be shortened to almost zero, while the length of the long vector is compressed to a value close to but not more than one.
 The following is an expression of this non-linear function:
-<center>![squashing](https://raw.githubusercontent.com/deepblacksky/capsnet-tensorflow/blob/master/images/squashing.png)</center>
+![squashing](https://raw.githubusercontent.com/deepblacksky/capsnet-tensorflow/blob/master/images/squashing.png)
 where v_j is the output vector of Capsule j, s_j is the weighted sum of all the Capsules output by the previous layer to the Capsule j of the current layer, simply saying that s_j is the input vector of Capsule j.<br>
 Since one Capsule unit is the 8D vector not like traditional scalar, how compute the vector inputs and outputs of capsule is the KEY.
 Capsule's input vector is equivalent to the scalar input of a neuron in a classical neural network, which is equivalent to the propagation and connection between two Capsules.<br>
