@@ -17,7 +17,7 @@ input tensor size: `[bathsize, 28, 28, 1]`, output tesnor size: `[batchsize, 20,
 - ### PrimaryCaps<br>
 input tensor size: `[bathsize, 20, 20, 256]`, output tesnor size: `[batchsize, 1152, 8, 1]`<br>
 The detail of PrimaryCaps as follow:<br>
-![primarycaps](https://github.com/deepblacksky/capsnet-tensorflow/blob/master/images/primaryCaps.jpg)<br>
+![primarycaps](https://raw.githubusercontent.com/deepblacksky/capsnet-tensorflow/blob/master/images/primaryCaps.jpg)<br>
 The primarycaps layer can be viewed as performing 8 Conv2d operations of different weights on an input
 tensor of dimensions 20 x 20 x 256,
 each time operation is a Conv2d with `num_output=32, kernel_size=9, stride=2`.<br>
@@ -38,28 +38,28 @@ So its value must be between 0 and 1.
 To achieve this compression and to complete the Capsule-level activation, Hinton used a non-linear function called "squashing."
 This non-linear function ensures that the length of the short vector can be shortened to almost zero, while the length of the long vector is compressed to a value close to but not more than one.
 The following is an expression of this non-linear function:
-<center>![squashing](https://github.com/deepblacksky/capsnet-tensorflow/blob/master/images/squashing.png)</center>
+<center>![squashing](https://raw.githubusercontent.com/deepblacksky/capsnet-tensorflow/blob/master/images/squashing.png)</center>
 where v_j is the output vector of Capsule j, s_j is the weighted sum of all the Capsules output by the previous layer to the Capsule j of the current layer, simply saying that s_j is the input vector of Capsule j.<br>
 Since one Capsule unit is the 8D vector not like traditional scalar, how compute the vector inputs and outputs of capsule is the KEY.
 Capsule's input vector is equivalent to the scalar input of a neuron in a classical neural network, which is equivalent to the propagation and connection between two Capsules.<br>
 The calculation of input vector is divided into two stages, namely linear combination and Routing, this process can be expressed by the following formula:
-<center>![](https://github.com/deepblacksky/capsnet-tensorflow/blob/master/images/digit.png)</center>
+<center>![](https://raw.githubusercontent.com/deepblacksky/capsnet-tensorflow/blob/master/images/digit.png)</center>
 After determining u_ji hat, we need to use Routing to allocate the second stage to compute output node s_j, which involves iteratively updating c_ij using dynamic routing. Get the next level of Capsule's input s_j through Routing, and put s_j into the "Squashing" non-linear function to get the output of the next Capsule.<br>
 Routing algorithm as follow:
-<center>![](https://github.com/deepblacksky/capsnet-tensorflow/blob/master/images/Routing_alg.png)</center>
+<center>![](https://raw.githubusercontent.com/deepblacksky/capsnet-tensorflow/blob/master/images/Routing_alg.png)</center>
 Therefore, the whole level of propagation and distribution can be divided into two parts, the first part is a linear combination of u_i and u_ji hat, the second part is the routing process between u_ji hat and s_j.<br>
 Dynamic routing is a kind of algorithm between the PrimaryCaps and DigitCaps to propagae "vevtor in vector output", propagation process as follow:
-![routing](https://github.com/deepblacksky/capsnet-tensorflow/blob/master/images/routing.jpg)
+![routing](https://raw.githubusercontent.com/deepblacksky/capsnet-tensorflow/blob/master/images/routing.jpg)
 
 ## Loss and Optimal
 In the paper, the author used Margin loss which is commonly used in SVM. The expression of loss function is:
-<center>![](https://github.com/deepblacksky/capsnet-tensorflow/blob/master/images/loss.png)</center>
+<center>![](https://raw.githubusercontent.com/deepblacksky/capsnet-tensorflow/blob/master/images/loss.png)</center>
 where T_c = 1 if a digit of class c is present and m_plus = 0.9 and m_minus = 0.1 and lambda = 0.5(suggest). The total loss is simply the sum of the losses of all digit capsules.<br>
 The paper used Reconstruction to regularization and improve accuracy.
-![](https://github.com/deepblacksky/capsnet-tensorflow/blob/master/images/recong.png)
+![](https://raw.githubusercontent.com/deepblacksky/capsnet-tensorflow/blob/master/images/recong.png)
 In addition to improving the accuracy of the model, Capsule's output vector reconstruction improve the interpretability of the model because we can modify the reconstruction of some or all of the components in the reconstructed vector and observe the reconstructed image changes which helps us to understand the output of the Capsule layer.<br>
 So, the total loss function is:
-<center>![](https://github.com/deepblacksky/capsnet-tensorflow/blob/master/images/total_loss.png)</center>
+<center>![](https://raw.githubusercontent.com/deepblacksky/capsnet-tensorflow/blob/master/images/total_loss.png)</center>
 
 where, lambda_loss is 0.00005 so that it does not dominate the
 margin loss during training.
@@ -69,12 +69,12 @@ margin loss during training.
 *batchsize : 64<br>
 epoch: 30*<br><br>
 **train loss:**
-![](https://github.com/deepblacksky/capsnet-tensorflow/blob/master/images/result_loss_1.png)
-![](https://github.com/deepblacksky/capsnet-tensorflow/blob/master/images/result_loss_2.png)
-![](https://github.com/deepblacksky/capsnet-tensorflow/blob/master/images/result_loss_3.png)
+![](https://raw.githubusercontent.com/deepblacksky/capsnet-tensorflow/blob/master/images/result_loss_1.png)
+![](https://raw.githubusercontent.com/deepblacksky/capsnet-tensorflow/blob/master/images/result_loss_2.png)
+![](https://raw.githubusercontent.com/deepblacksky/capsnet-tensorflow/blob/master/images/result_loss_3.png)
 <br><br>
 **accuracy:**<br>
-![](https://github.com/deepblacksky/capsnet-tensorflow/blob/master/images/accuracy.png)
+![](https://raw.githubusercontent.com/deepblacksky/capsnet-tensorflow/blob/master/images/accuracy.png)
 
 ## TODO
 - [ ] Capsnet on [fashion-mnist](https://github.com/zalandoresearch/fashion-mnist)
