@@ -38,28 +38,28 @@ So its value must be between 0 and 1.
 To achieve this compression and to complete the Capsule-level activation, Hinton used a non-linear function called "squashing."
 This non-linear function ensures that the length of the short vector can be shortened to almost zero, while the length of the long vector is compressed to a value close to but not more than one.
 The following is an expression of this non-linear function:<br>
-![squashing](https://raw.githubusercontent.com/deepblacksky/capsnet-tensorflow/master/images/squashing.png)
+![squashing](https://raw.githubusercontent.com/deepblacksky/capsnet-tensorflow/master/images/squashing.png)<br>
 where v_j is the output vector of Capsule j, s_j is the weighted sum of all the Capsules output by the previous layer to the Capsule j of the current layer, simply saying that s_j is the input vector of Capsule j.<br>
 Since one Capsule unit is the 8D vector not like traditional scalar, how compute the vector inputs and outputs of capsule is the KEY.
 Capsule's input vector is equivalent to the scalar input of a neuron in a classical neural network, which is equivalent to the propagation and connection between two Capsules.<br>
 The calculation of input vector is divided into two stages, namely linear combination and Routing, this process can be expressed by the following formula:<br>
-![](https://raw.githubusercontent.com/deepblacksky/capsnet-tensorflow/master/images/digit.png)
+![](https://raw.githubusercontent.com/deepblacksky/capsnet-tensorflow/master/images/digit.png)<br>
 After determining u_ji hat, we need to use Routing to allocate the second stage to compute output node s_j, which involves iteratively updating c_ij using dynamic routing. Get the next level of Capsule's input s_j through Routing, and put s_j into the "Squashing" non-linear function to get the output of the next Capsule.<br>
 Routing algorithm as follow:<br>
-![](https://raw.githubusercontent.com/deepblacksky/capsnet-tensorflow/blob/master/images/Routing_alg.png)</center>
+![](https://raw.githubusercontent.com/deepblacksky/capsnet-tensorflow/blob/master/images/Routing_alg.png)<br>
 Therefore, the whole level of propagation and distribution can be divided into two parts, the first part is a linear combination of u_i and u_ji hat, the second part is the routing process between u_ji hat and s_j.<br>
 Dynamic routing is a kind of algorithm between the PrimaryCaps and DigitCaps to propagae "vevtor in vector output", propagation process as follow:<br>
-![routing](https://raw.githubusercontent.com/deepblacksky/capsnet-tensorflow/master/images/routing.jpg)
+![routing](https://raw.githubusercontent.com/deepblacksky/capsnet-tensorflow/master/images/routing.jpg)<br>
 
 ## Loss and Optimal
 In the paper, the author used Margin loss which is commonly used in SVM. The expression of loss function is:<br>
-![](https://raw.githubusercontent.com/deepblacksky/capsnet-tensorflow/master/images/loss.png)
+![](https://raw.githubusercontent.com/deepblacksky/capsnet-tensorflow/master/images/loss.png)<br>
 where T_c = 1 if a digit of class c is present and m_plus = 0.9 and m_minus = 0.1 and lambda = 0.5(suggest). The total loss is simply the sum of the losses of all digit capsules.<br>
 The paper used Reconstruction to regularization and improve accuracy.<br>
-![](https://raw.githubusercontent.com/deepblacksky/capsnet-tensorflow/master/images/recong.png)
+![](https://raw.githubusercontent.com/deepblacksky/capsnet-tensorflow/master/images/recong.png)<br>
 In addition to improving the accuracy of the model, Capsule's output vector reconstruction improve the interpretability of the model because we can modify the reconstruction of some or all of the components in the reconstructed vector and observe the reconstructed image changes which helps us to understand the output of the Capsule layer.<br>
 So, the total loss function is:<br>
-![](https://raw.githubusercontent.com/deepblacksky/capsnet-tensorflow/master/images/total_loss.png)
+![](https://raw.githubusercontent.com/deepblacksky/capsnet-tensorflow/master/images/total_loss.png)<br>
 
 where, lambda_loss is 0.00005 so that it does not dominate the
 margin loss during training.
