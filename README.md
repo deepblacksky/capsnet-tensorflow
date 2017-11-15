@@ -78,8 +78,8 @@ epoch: 30*<br><br>
 
 ## TODO
 - [ ] Capsnet on [fashion-mnist](https://github.com/zalandoresearch/fashion-mnist)
-- [ ]Capsnet on [cifar10](http://www.cs.toronto.edu/~kriz/cifar.html)
-- [ ]Modify network architecture
+- [ ] Capsnet on [cifar10](http://www.cs.toronto.edu/~kriz/cifar.html)
+- [ ] Modify network architecture
 
 *Reference:<br>
 https://www.jiqizhixin.com/articles/2017-11-05<br>
